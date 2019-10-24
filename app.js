@@ -1,8 +1,8 @@
 const express = require('express')
 const redis = require('redis');
 
-var publisher = redis.createClient();
-var subscriber = redis.createClient();
+var publisher = redis.createClient(process.env.REDIS_URL);
+var subscriber = redis.createClient(process.env.REDIS_URL);
 
 const app = express()
 const port = 3000
