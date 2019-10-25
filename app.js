@@ -1,8 +1,18 @@
 const express = require('express')
 const redis = require('redis');
 
-var publisher = redis.createClient(process.env.REDIS_URL);
-var subscriber = redis.createClient(process.env.REDIS_URL);
+var publisher, subscriber;
+
+if (process.env.NODE_ENV == "development") {
+	console.log(process.env.REDIS_URL)
+	publisher = redis.createClient(process.env.REDIS_URL);
+	subscriber = redis.createClient(process.env.REDIS_URL);
+} else {
+	console.log('here')
+	const clientParams = {no_ready_check: true, auth_pass: process.env.REDIS_PASSWORD};
+	publisher = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST, clientParams)
+	subscriber = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST, clientParams)
+}
 
 const app = express()
 const port = 3000

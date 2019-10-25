@@ -2,7 +2,7 @@
   "name": "nodejs-sse",
   "version": "1.0.0",
   "description": "NodeJS server with server sent events and Redis Pub-Sub functionality",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,7 +13,8 @@
   "keywords": [
     "nodejs",
     "sse",
-    "redis"
+    "redis",
+    "heroku"
   ],
   "author": "",
   "license": "ISC",
@@ -24,5 +25,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "redis": "^2.8.0"
+  },
+  "engines": {
+    "node": "10.x"
   }
 }
