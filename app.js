@@ -1,5 +1,6 @@
 const express = require('express')
 const redis = require('redis')
+const path = require('path')
 
 var publisher, subscriber
 
@@ -17,9 +18,9 @@ const port = process.env.PORT
 
 var setOfConnections = {}
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/api/hello-world', (req, res) => res.send('Hello World!'))
 
-app.get('/ping', (req, res) => {
+app.get('/api/ping', (req, res) => {
 
 	const message = req.query.message
 
@@ -36,7 +37,7 @@ app.get('/ping', (req, res) => {
 	res.send("OK!")
 })
 
-app.get('/events', (req, res) => {
+app.get('/api/events', (req, res) => {
 
 	const userId = req.query.user_id
 
@@ -63,5 +64,11 @@ app.get('/events', (req, res) => {
     })
 
 })
+
+app.use(express.static(path.join(__dirname, "client", "build")))
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
