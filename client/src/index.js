@@ -2,37 +2,36 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+import axios from 'axios';
+
 
 function Square(props) {
 	return (
 		<button className="square" onClick={props.onClick}>
 			{props.value}
-		</button>		
+		</button>
 	);
 }
 
 class Board extends React.Component {
+
+  componentDidMount() {
+    axios.get('/api/hello-world').then((response) => {
+      console.log(response);
+    })
+  }
 
   renderSquare(i) {
     return (
     	<Square 
     		value={this.props.squares[i]} 
     		onClick={() => this.props.onClick(i)}
-		/>	
-	);
+      />
+    );
   }
 
   render() {
 
-  	// const winner = calculateWinner(this.state.squares);
-  	// let status;
-
-  	// if (winner) {
-  	// 	status = 'Winner ' + winner;
-  	// } else {
-  	// 	status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-  	// }
-    
     return (
       <div>
         <div className="board-row">
@@ -90,7 +89,7 @@ class Game extends React.Component {
   jumpTo(step) {
     this.setState({
       stepNumber: step,
-      xIsNext: (step % 2) === 0,
+      xIsNext: (step % 2) === 0
     });
   }
 
